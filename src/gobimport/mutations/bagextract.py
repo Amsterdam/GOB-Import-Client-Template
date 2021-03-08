@@ -104,8 +104,8 @@ class BagExtractMutationsHandler:
             mode, fname = self.start_next(last_import, gemeente)
 
         mutation_import = MutationImport()
-        mutation_import.catalogue = dataset['catalogue']
-        mutation_import.collection = dataset['entity']
+        mutation_import.catalog = dataset['catalog']
+        mutation_import.collection = dataset['collection']
         mutation_import.application = dataset['source']['application']
         mutation_import.mode = mode.value
         mutation_import.filename = fname

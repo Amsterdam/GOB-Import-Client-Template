@@ -1,21 +1,21 @@
 """
-Testcatalogue enrichment
+Testcatalog enrichment
 
 """
 
 from gobimport.enricher.enricher import Enricher
 
 
-class TstCatalogueEnricher(Enricher):
+class TstCatalogEnricher(Enricher):
 
     @classmethod
-    def enriches(cls, app_name, catalog_name, entity_name):
-        if catalog_name == "test_catalogue":
-            enricher = TstCatalogueEnricher(app_name, catalog_name, entity_name)
+    def enriches(cls, app_name, catalog_name, collection_name):
+        if catalog_name == "test_catalog":
+            enricher = TstCatalogEnricher(app_name, catalog_name, collection_name)
             return enricher._enrich_entity is not None
 
-    def __init__(self, app_name, catalogue_name, entity_name):
-        super().__init__(app_name, catalogue_name, entity_name, methods={
+    def __init__(self, app_name, catalog_name, collection_name):
+        super().__init__(app_name, catalog_name, collection_name, methods={
             "rel_test_entity_a": self.enrich_rel_entity,
             "rel_test_entity_b": self.enrich_rel_entity,
         })

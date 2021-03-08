@@ -245,14 +245,14 @@ ENTITY_CHECKS = {
 
 class Validator:
 
-    def __init__(self, source_app, catalogue, entity_name, input_spec):
+    def __init__(self, source_app, catalog_name, collection_name, input_spec):
         self.source_app = source_app
-        self.catalogue = catalogue
-        self.entity_name = entity_name
-        self.entity_id = GOBModel().get_collection(self.catalogue, self.entity_name).get('entity_id')
+        self.catalog_name = catalog_name
+        self.collection_name = collection_name
+        self.entity_id = GOBModel().get_collection(self.catalog_name, self.collection_name).get('entity_id')
         self.input_spec = input_spec
 
-        self.qa_checks = ENTITY_CHECKS.get(catalogue, {}).get(entity_name, {})
+        self.qa_checks = ENTITY_CHECKS.get(catalog_name, {}).get(collection_name, {})
         self.collection_qa = {f"num_invalid_{attr}": 0 for attr in self.qa_checks.keys()}
         self.fatal = False
 
@@ -269,7 +269,7 @@ class Validator:
     def result(self):
         if self.fatal:
             raise GOBException(
-                f"Quality assurance failed for {self.entity_name}"
+                f"Quality assurance failed for {self.collection_name}"
             )
 
         if self.duplicates:

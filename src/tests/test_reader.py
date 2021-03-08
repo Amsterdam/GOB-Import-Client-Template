@@ -23,8 +23,8 @@ class TestReader(unittest.TestCase):
     def dataset(self):
         return {
             "gob_mapping": {},
-            "catalogue": "test_catalogue",
-            "entity": "test_entity"
+            "catalog": "test_catalog",
+            "collection": "test_collection"
         }
 
     def test_constructor(self):

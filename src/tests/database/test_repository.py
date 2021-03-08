@@ -16,7 +16,7 @@ class MutationImportRepositoryTest(TestCase):
 
         session.assert_has_calls([
             call.query(mock_mutation_import),
-            call.query().filter_by(catalogue='cat', collection='coll', application='application'),
+            call.query().filter_by(catalog='cat', collection='coll', application='application'),
             call.query().filter_by().order_by(mock_mutation_import.started_at.desc()),
             call.query().filter_by().order_by().first(),
         ])

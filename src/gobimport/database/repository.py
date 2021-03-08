@@ -6,10 +6,10 @@ class MutationImportRepository:
     def __init__(self, session):
         self.session = session
 
-    def get_last(self, catalogue: str, collection: str, application: str):
+    def get_last(self, catalog: str, collection: str, application: str):
         return self.session\
             .query(MutationImport)\
-            .filter_by(catalogue=catalogue, collection=collection, application=application)\
+            .filter_by(catalog=catalog, collection=collection, application=application)\
             .order_by(MutationImport.started_at.desc())\
             .first()
 

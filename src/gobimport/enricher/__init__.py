@@ -7,12 +7,12 @@ from gobimport.enricher.gebieden import GebiedenEnricher
 from gobimport.enricher.bag import BAGEnricher
 from gobimport.enricher.brk import BRKEnricher
 from gobimport.enricher.wkpb import WKPBEnricher
-from gobimport.enricher.test_catalogue import TstCatalogueEnricher
+from gobimport.enricher.test_catalog import TstCatalogEnricher
 
 
 class BaseEnricher:
 
-    def __init__(self, app_name, catalog_name, entity_name):
+    def __init__(self, app_name, catalog_name, collection_name):
         """
         Select all applicable enrichers for the given catalog and entity
 
@@ -20,10 +20,10 @@ class BaseEnricher:
         :param entity_name:
         """
         self.enrichers = []
-        for CatalogueEnricher in [GebiedenEnricher, MeetboutenEnricher, BAGEnricher, BRKEnricher, WKPBEnricher,
-                                  TstCatalogueEnricher]:
-            if CatalogueEnricher.enriches(app_name, catalog_name, entity_name):
-                self.enrichers.append(CatalogueEnricher(app_name, catalog_name, entity_name))
+        for CatalogEnricher in [GebiedenEnricher, MeetboutenEnricher, BAGEnricher, BRKEnricher, WKPBEnricher,
+                                  TstCatalogEnricher]:
+            if CatalogEnricher.enriches(app_name, catalog_name, collection_name):
+                self.enrichers.append(CatalogEnricher(app_name, catalog_name, collection_name))
 
     def enrich(self, entity):
         """

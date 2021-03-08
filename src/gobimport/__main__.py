@@ -31,25 +31,25 @@ def extract_dataset_from_msg(msg):
 
     message = {
        "header": {
-          "catalogue": "some catalogue",
+          "catalog": "some catalog",
           "collection": "the collection",
           "application": "the application"
        }
     }
 
-    Where 'application' is optional when there is only one known application for given catalogue and collection
+    Where 'application' is optional when there is only one known application for given catalog and collection
 
     :param msg:
     :return:
     """
 
-    required_keys = ['catalogue', 'collection']
+    required_keys = ['catalog', 'collection']
     header = msg.get('header', {})
 
     if not all([key in header for key in required_keys]):
         raise GOBException(f"Missing dataset keys. Expected keys: {','.join(required_keys)}")
 
-    return get_import_definition(header['catalogue'], header['collection'], header.get('application'))
+    return get_import_definition(header['catalog'], header['collection'], header.get('application'))
 
 
 def handle_import_msg(msg):
@@ -58,8 +58,8 @@ def handle_import_msg(msg):
     msg['header'] |= {
         'source': dataset['source']['name'],
         'application': dataset['source']['application'],
-        'catalogue': dataset['catalogue'],
-        'entity': dataset['entity'],
+        'catalog': dataset['catalog'],
+        'collection': dataset['collection'],
     }
     logger.configure(msg, "IMPORT")
     header = msg.get('header', {})
@@ -76,7 +76,7 @@ def handle_import_msg(msg):
 
         with DatabaseSession() as session:
             repo = MutationImportRepository(session)
-            last_import = repo.get_last(header.get('catalogue'), header.get('entity'), dataset.get('source', {})
+            last_import = repo.get_last(header.get('catalog'), header.get('collection'), dataset.get('source', {})
                                         .get('application'))
             # If BAGExtract, create ImportClient with edited dataset (read_config) and mode. Add callback to msg header
             try:
@@ -125,8 +125,7 @@ def handle_mutation_import_callback(msg):
         if mutation_handler.have_next(mutation_import):
             logger.info("Have pending next import. Triggering new import.")
             copy_header = [
-                'catalogue',
-                'entity',
+                'catalog',
                 'collection',
                 'application',
             ]
@@ -140,7 +139,7 @@ def handle_mutation_import_callback(msg):
 def handle_import_object_msg(msg):
     logger.configure(msg, "IMPORT OBJECT")
     logger.info("Start import object")
-    importer = MappinglessConverterAdapter(msg['header'].get('catalogue'), msg['header'].get('entity'),
+    importer = MappinglessConverterAdapter(msg['header'].get('catalog'), msg['header'].get('collection'),
                                            msg['header'].get('entity_id_attr'))
     entity = importer.convert(msg['contents'])
 
@@ -148,7 +147,7 @@ def handle_import_object_msg(msg):
         'header': {
             **msg['header'],
             'mode': ImportMode.SINGLE_OBJECT.value,
-            'collection': msg['header'].get('entity'),
+            'collection': msg['header'].get('collection'),
         },
         'summary': logger.get_summary(),
         'contents': [entity]

@@ -16,7 +16,7 @@ class MutationImportTest(TestCase):
 
     def test_repr(self):
         mi = MutationImport()
-        mi.catalogue = 'CAT'
+        mi.catalog = 'CAT'
         mi.collection = 'COLL'
         mi.filename = 'FNAME'
 

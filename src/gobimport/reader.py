@@ -33,9 +33,9 @@ class Reader:
         self.secure_types = [f"GOB.{type.name}" for type in GOB_SECURE_TYPES]
         mapping = dataset["gob_mapping"]
 
-        catalogue = dataset['catalogue']
-        entity = dataset['entity']
-        gob_attributes = GOBModel().get_collection(catalogue, entity)["all_fields"]
+        catalog = dataset['catalog']
+        collection = dataset['collection']
+        gob_attributes = GOBModel().get_collection(catalog, collection)["all_fields"]
 
         self.secure_attributes = []
         self.set_secure_attributes(mapping, gob_attributes)

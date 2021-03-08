@@ -24,8 +24,8 @@ class TestImportClient(TestCase):
                 'query': fixtures.random_string(),
             },
             'version': 0.1,
-            'catalogue': fixtures.random_string(),
-            'entity': fixtures.random_string(),
+            'catalog': fixtures.random_string(),
+            'collection': fixtures.random_string(),
             'gob_mapping': {}
         }
 

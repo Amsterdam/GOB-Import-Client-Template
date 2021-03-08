@@ -43,19 +43,19 @@ class ImportClient:
 
         self.init_dataset(dataset)
 
-        self.entity_validator = EntityValidator(self.catalogue, self.entity, self.func_source_id)
+        self.entity_validator = EntityValidator(self.catalog, self.collection, self.func_source_id)
         self.merger = Merger(self)
 
         self.header = msg.get('header', {})
-        self.logger.info(f"Import dataset {self.entity} from {self.source_app} (mode = {self.mode.value}) started")
+        self.logger.info(f"Import dataset {self.collection} from {self.source_app} (mode = {self.mode.value}) started")
 
     def init_dataset(self, dataset):
         self.dataset = dataset
         self.source = self.dataset['source']
         self.source_id = self.dataset['source']['entity_id']
         self.source_app = self.dataset['source'].get('application', self.dataset['source']['name'])
-        self.catalogue = self.dataset['catalogue']
-        self.entity = self.dataset['entity']
+        self.catalog = self.dataset['catalog']
+        self.collection = self.dataset['collection']
 
         # Find the functional source id
         # This is the functional field that is mapped onto the source_id
@@ -64,9 +64,9 @@ class ImportClient:
         self.func_source_id = ids[0] if ids else "_source_id"
 
         self.injector = Injector(self.source.get("inject"))
-        self.enricher = BaseEnricher(self.source_app, self.catalogue, self.entity)
-        self.validator = Validator(self.source_app, self.catalogue, self.entity, self.dataset)
-        self.converter = Converter(self.catalogue, self.entity, self.dataset)
+        self.enricher = BaseEnricher(self.source_app, self.catalog, self.collection)
+        self.validator = Validator(self.source_app, self.catalog, self.collection, self.dataset)
+        self.converter = Converter(self.catalog, self.collection, self.dataset)
 
     def get_result_msg(self):
         """The result of the import needs to be published.
@@ -91,7 +91,7 @@ class ImportClient:
         }
 
         # Log end of import process
-        self.logger.info(f"Import dataset {self.entity} from {self.source_app} completed. "
+        self.logger.info(f"Import dataset {self.collection} from {self.source_app} completed. "
                          f"{summary['num_records']} records were read from the source.",
                          kwargs={"data": summary})
 
@@ -146,7 +146,7 @@ class ImportClient:
             self.row = None
 
             with ContentsWriter() as writer, \
-                    ProgressTicker(f"Import {self.catalogue} {self.entity}", 10000) as progress:
+                    ProgressTicker(f"Import {self.catalog} {self.collection}", 10000) as progress:
 
                 self.filename = writer.filename
 

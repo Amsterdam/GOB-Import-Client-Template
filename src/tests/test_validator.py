@@ -26,8 +26,8 @@ class TestValidator(unittest.TestCase):
         self.nullpubliceerbaar_meetbouten = fixtures.get_nullpubliceerbaar_meetbouten()
 
         self.mock_input_spec = {
-            'catalogue': 'meetbouten',
-            'entity': 'meetbouten',
+            'catalog': 'meetbouten',
+            'collection': 'meetbouten',
             'source': {
                 'entity_id': 'identificatie'
             }
@@ -54,8 +54,8 @@ class TestValidator(unittest.TestCase):
 
     def test_valid_primary_key_with_states(self):
         mock_input_spec = {
-            'catalogue': 'bag',
-            'entity': 'woonplaatsen',
+            'catalog': 'bag',
+            'collection': 'woonplaatsen',
             'source': {
                 'entity_id': 'identificatie'
             }
@@ -70,8 +70,8 @@ class TestValidator(unittest.TestCase):
 
     def test_valid_primary_key_with_states_other_seqnr(self):
         mock_input_spec = {
-            'catalogue': 'bag',
-            'entity': 'woonplaatsen',
+            'catalog': 'bag',
+            'collection': 'woonplaatsen',
             'source': {
                 'entity_id': 'identificatie'
             },
@@ -91,8 +91,8 @@ class TestValidator(unittest.TestCase):
 
     def test_duplicate_primary_key_with_states_other_seqnr(self):
         mock_input_spec = {
-            'catalogue': 'bag',
-            'entity': 'woonplaatsen',
+            'catalog': 'bag',
+            'collection': 'woonplaatsen',
             'source': {
                 'entity_id': 'identificatie'
             },

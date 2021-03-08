@@ -31,13 +31,13 @@ CBS_WIJKEN_API = 'https://geodata.nationaalgeoregister.nl/wijkenbuurten2018/wfs'
 class GebiedenEnricher(Enricher):
 
     @classmethod
-    def enriches(cls, app_name, catalog_name, entity_name):
+    def enriches(cls, app_name, catalog_name, collection_name):
         if catalog_name == "gebieden":
-            enricher = GebiedenEnricher(app_name, catalog_name, entity_name)
+            enricher = GebiedenEnricher(app_name, catalog_name, collection_name)
             return enricher._enrich_entity is not None
 
-    def __init__(self, app_name, catalogue_name, entity_name):
-        super().__init__(app_name, catalogue_name, entity_name, methods={
+    def __init__(self, app_name, catalog_name, collection_name):
+        super().__init__(app_name, catalog_name, collection_name, methods={
             "buurten": self.enrich_buurt,
             "wijken": self.enrich_wijk,
             "ggwgebieden": self.enrich_ggwgebied,

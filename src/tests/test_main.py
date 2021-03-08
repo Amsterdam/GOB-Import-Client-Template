@@ -40,8 +40,8 @@ class TestMain(TestCase):
                 "name": "Some name",
                 "application": "The application",
             },
-            "catalogue": "CAT",
-            "entity": "ENT"
+            "catalog": "CAT",
+            "collection": "COL"
         }
         handle_import_msg(self.mock_msg)
 
@@ -60,9 +60,9 @@ class TestMain(TestCase):
             'dataset_file': 'data/somefile.json',
             'header': {
                 'application': 'The application',
-                'catalogue': 'CAT',
+                'catalog': 'CAT',
                 'dataset_file': 'data/fromheader.json',
-                'entity': 'ENT',
+                'collection': 'COL',
                 'source': 'Some name'
             }
 
@@ -82,8 +82,8 @@ class TestMain(TestCase):
                 "name": "Some name",
                 "application": "APP NAME",
             },
-            "catalogue": "CAT",
-            "entity": "ENT"
+            "catalog": "CAT",
+            "collection": "COL"
         }
         mock_mutations_handler.is_mutations_import.return_value = True
 
@@ -111,9 +111,9 @@ class TestMain(TestCase):
             'dataset_file': 'data/somefile.json',
             'header': {
                 'application': 'APP NAME',
-                'catalogue': 'CAT',
+                'catalog': 'CAT',
                 'dataset_file': 'data/fromheader.json',
-                'entity': 'ENT',
+                'collection': 'COL',
                 'source': 'Some name',
                 'on_workflow_complete': {
                     'exchange': WORKFLOW_EXCHANGE,
@@ -137,9 +137,8 @@ class TestMain(TestCase):
         msg = {
             "header": {
                 "mutation_import_id": 42,
-                "catalogue": "THE CAT",
-                "collection": "THE COLL",
-                "entity": "THE ENT",
+                "catalog": "THE CAT",
+                "collection": "THE COL",
                 "application": "THE APP",
             },
         }
@@ -162,9 +161,8 @@ class TestMain(TestCase):
         mock_start_workflow.assert_called_with({
             'workflow_name': 'import',
         }, {
-            "catalogue": "THE CAT",
+            "catalog": "THE CAT",
             "collection": "THE COLL",
-            "entity": "THE ENT",
             "application": "THE APP",
         })
 
@@ -180,8 +178,8 @@ class TestMain(TestCase):
     def test_handle_import_object_msg(self, mock_converter, mock_logger):
         msg = {
             'header': {
-                'catalogue': 'CAT',
-                'entity': 'ENT',
+                'catalog': 'CAT',
+                'collection': 'COL',
                 'entity_id_attr': 'id_attr',
             },
             'contents': {'the': 'contents'},
@@ -204,7 +202,7 @@ class TestMain(TestCase):
     def test_extract_dataset_from_msg(self, mock_import_definition):
         msg = {
             'header': {
-                'catalogue': 'cat',
+                'catalog': 'cat',
                 'collection': 'coll',
                 'application': 'app'
             }
@@ -217,7 +215,7 @@ class TestMain(TestCase):
 
         msg = {
             'header': {
-                'catalogue': 'cat',
+                'catalog': 'cat',
                 'collection': 'coll'
             }
         }
@@ -227,7 +225,7 @@ class TestMain(TestCase):
 
     def test_extract_dataset_missing_keys(self):
         cases = [
-            {'catalogue': 'cat'},
+            {'catalog': 'cat'},
             {'collection': 'col'},
             {},
         ]

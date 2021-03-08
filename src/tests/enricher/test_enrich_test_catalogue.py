@@ -1,6 +1,6 @@
 import unittest
 
-from gobimport.enricher.test_catalogue import TstCatalogueEnricher
+from gobimport.enricher.test_catalog import TstCatalogEnricher
 
 
 class TestEnricher(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestEnricher(unittest.TestCase):
             'manyref_to_d_begin_geldigheid': 'some date;another date',
         }
 
-        enricher = TstCatalogueEnricher('app name', 'test_catalogue', 'rel_test_entity_a')
+        enricher = TstCatalogEnricher('app name', 'test_catalog', 'rel_test_collection_a')
 
         enricher.enrich_rel_entity(entity)
         self.assertEqual({

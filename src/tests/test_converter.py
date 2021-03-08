@@ -443,8 +443,8 @@ class TestMappinglessConverterAdapter(unittest.TestCase):
                     'source_mapping': 'fieldB',
                 },
             },
-            'catalogue': 'the cat',
-            'entity': 'the col',
+            'catalog': 'the cat',
+            'collection': 'the col',
             'source': {
                 'entity_id': 'attr'
             }

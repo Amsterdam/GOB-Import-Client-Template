@@ -99,8 +99,8 @@ class TestBagExtractMutationsHandler(TestCase):
                 },
                 'application': 'THE APP',
             },
-            'catalogue': 'THE CAT',
-            'entity': 'THE ENT',
+            'catalog': 'THE CAT',
+            'collection': 'THE COL',
         }
 
         handler = BagExtractMutationsHandler()
@@ -161,8 +161,8 @@ class TestBagExtractMutationsHandler(TestCase):
                     },
                     'application': 'THE APP',
                 },
-                'catalogue': 'THE CAT',
-                'entity': 'THE ENT',
+                'catalog': 'THE CAT',
+                'collection': 'THE COL',
             }, new_dataset)
 
         # Test Exception for when not available

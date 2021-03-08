@@ -64,14 +64,14 @@ class MappinglessConverterAdapter:
 
     """
 
-    def __init__(self, catalogue_name: str, entity_name: str, entity_id_attr: str):
+    def __init__(self, catalog_name: str, collection_name: str, entity_id_attr: str):
         """
 
-        :param catalogue_name:
-        :param entity_name:
+        :param catalog_name:
+        :param collection_name:
         :param entity_id_attr: The name of the attribute that serves as the entity_id
         """
-        self.collection = GOBModel().get_collection(catalogue_name, entity_name)
+        self.collection = GOBModel().get_collection(catalog_name, collection_name)
         self.fields = self.collection['fields']
 
         mapping = {
@@ -83,14 +83,14 @@ class MappinglessConverterAdapter:
 
         input_spec = {
             'gob_mapping': mapping,
-            'catalogue': catalogue_name,
-            'entity': entity_name,
+            'catalog': catalog_name,
+            'collection': collection_name,
             'source': {
                 'entity_id': entity_id_attr,
             }
         }
 
-        self.converter = Converter(catalogue_name, entity_name, input_spec)
+        self.converter = Converter(catalog_name, collection_name, input_spec)
 
     def convert(self, row: dict):
         return self.converter.convert(row)

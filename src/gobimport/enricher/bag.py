@@ -36,16 +36,16 @@ FINANCIERINGSCODE_MAPPING = {
 class BAGEnricher(Enricher):
 
     @classmethod
-    def enriches(cls, app_name, catalog_name, entity_name):
+    def enriches(cls, app_name, catalog_name, collection_name):
         if catalog_name == "bag":
-            enricher = BAGEnricher(app_name, catalog_name, entity_name)
+            enricher = BAGEnricher(app_name, catalog_name, collection_name)
             return enricher._enrich_entity is not None
 
-    def __init__(self, app_name, catalogue_name, entity_name):
+    def __init__(self, app_name, catalog_name, collection_name):
         self.multiple_values_logged = False
         self.entity_name = entity_name
 
-        super().__init__(app_name, catalogue_name, entity_name, methods={
+        super().__init__(app_name, catalog_name, collection_name, methods={
             "nummeraanduidingen": self.enrich_nummeraanduiding,
             "verblijfsobjecten": self.enrich_verblijfsobject,
         })

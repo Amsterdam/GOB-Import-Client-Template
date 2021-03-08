@@ -23,13 +23,13 @@ class TestEntityValidator(unittest.TestCase):
     def test_entity_validate_without_state(self, mock_model):
         mock_model.return_value = self.mock_model
         self.mock_model.has_states.return_value = False
-        self.assertFalse(StateValidator.validates('catalogue', 'collection'))
+        self.assertFalse(StateValidator.validates('catalog', 'collection'))
 
     @patch('gobimport.entity_validator.state.GOBModel')
     def test_entity_validate_with_state(self, mock_model):
         mock_model.return_value = self.mock_model
         self.mock_model.has_states.return_value = True
-        self.assertTrue(StateValidator.validates('catalogue', 'collection'))
+        self.assertTrue(StateValidator.validates('catalog', 'collection'))
 
     def test_validate_entity_state_valid(self):
         self.entities = [
@@ -40,7 +40,7 @@ class TestEntityValidator(unittest.TestCase):
                 'eind_geldigheid': datetime.datetime(2019, 1, 1),
             }
         ]
-        validator = StateValidator('catalogue', 'collection', 'identificatie')
+        validator = StateValidator('catalog', 'collection', 'identificatie')
         for entity in self.entities:
             validator.validate(entity)
         self.assertTrue(validator.result())
@@ -55,7 +55,7 @@ class TestEntityValidator(unittest.TestCase):
             }
         ]
 
-        validator = StateValidator('catalogue', 'collection', 'identificatie')
+        validator = StateValidator('catalog', 'collection', 'identificatie')
         for entity in self.entities:
             validator.validate(entity)
         self.assertTrue(validator.result())
@@ -70,7 +70,7 @@ class TestEntityValidator(unittest.TestCase):
             }
         ]
 
-        validator = StateValidator('catalogue', 'collection', 'identificatie')
+        validator = StateValidator('catalog', 'collection', 'identificatie')
         for entity in self.entities:
             validator.validate(entity)
         self.assertFalse(validator.result())
@@ -85,7 +85,7 @@ class TestEntityValidator(unittest.TestCase):
             }
         ]
 
-        validator = StateValidator('catalogue', 'collection', 'identificatie')
+        validator = StateValidator('catalog', 'collection', 'identificatie')
         for entity in self.entities:
             validator.validate(entity)
         self.assertFalse(validator.result())
@@ -106,7 +106,7 @@ class TestEntityValidator(unittest.TestCase):
             }
         ]
 
-        validator = StateValidator('catalogue', 'collection', 'identificatie')
+        validator = StateValidator('catalog', 'collection', 'identificatie')
         for entity in self.entities:
             validator.validate(entity)
         self.assertFalse(validator.result())
@@ -128,7 +128,7 @@ class TestEntityValidator(unittest.TestCase):
         ]
 
         with patch("gobimport.entity_validator.state.log_issue") as mock_log_issue:
-            validator = StateValidator('catalogue', 'collection', 'identificatie')
+            validator = StateValidator('catalog', 'collection', 'identificatie')
             for entity in self.entities:
                 validator.validate(entity)
             self.assertTrue(validator.result())

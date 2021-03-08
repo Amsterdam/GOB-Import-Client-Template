@@ -10,7 +10,7 @@ class MutationImport(Base):
     __tablename__ = "mutation_import"
 
     id = Column(Integer, primary_key=True)
-    catalogue = Column(String, doc='The catalogue', index=True)
+    catalog = Column(String, doc='The catalog', index=True)
     collection = Column(String, doc='The collection', index=True)
     application = Column(String, doc='The application', index=True)
     started_at = Column(DateTime, doc='Start time', default=datetime.datetime.utcnow)
@@ -22,4 +22,4 @@ class MutationImport(Base):
         return self.ended_at is not None
 
     def __repr__(self):
-        return f'<MutationImport {self.catalogue} {self.collection} ({self.filename})>'
+        return f'<MutationImport {self.catalog} {self.collection} ({self.filename})>'

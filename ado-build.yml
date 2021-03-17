@@ -1,6 +1,107 @@
 pool:
   vmImage: ubuntu-latest
 
+trigger:
+  branches:
+    exclude:
+      - "*"
+
+parameters:
+  - name: runCodeQuality
+    type: boolean
+    default: true
+  - name: runUnitTests
+    type: boolean
+    default: true
+  - name: runBuildPush
+    type: boolean
+    default: true
+  - name: runContainerScan
+    type: boolean
+    default: true
+  - name: runE2Etests
+    type: boolean
+    default: true
+
+variables:
+  versionTag: "x.y.z"
+
+resources:
+  repositories:
+    - repository: gob-import
+      type: github
+      endpoint: Amsterdam
+      name: Amsterdam/Gob-Import
+
+steps:
+  - checkout: self
+
+  - task: CmdLine@2
+    displayName: initiatePipelineVars
+    inputs:
+      script: |
+        echo "##vso[task.setvariable variable=timeStamp]$(date +%y%m%d%H%M%S)"
+        echo "##vso[task.setvariable variable=productName]$(echo ${SYSTEM_DEFINITIONNAME}| tr '[:upper:]' '[:lower:]')"
+        echo "##vso[task.setvariable variable=productRepo]${SYSTEM_DEFINITIONNAME}"
+        #echo $(productRepo)-$(productName)
+        #workingDirectory: # Optional
+        #failOnStderr: false # Optional
+
+  - ${{ if eq(parameters.runCodeQuality, true) }}:
+      - task: CmdLine@2
+        displayName: runCodeQuality
+        continueOnError: true
+        inputs:
+          script: |
+            cd src/gobiimport
+            docker run --rm --tty --volume=$(pwd):/project tidypy/tidypy
+
+  - ${{ if eq(parameters.runBuildPush, true) }}:
+      - task: Docker@2
+        displayName: runBuildPush
+        inputs:
+          containerRegistry: "Container Registry - piosupportacr"
+          repository: $(productName)
+          command: "buildAndPush"
+          Dockerfile: "src/Dockerfile"
+          tags: |
+            $(Build.BuildId)-$(timeStamp)
+            latest
+
+  - ${{ if eq(parameters.runContainerScan, true) }}:
+      - task: CmdLine@2
+        displayName: runContainerScan
+        inputs:
+          script: |
+            echo '#########CONTAINER SCAN PLACEHOLDER############'
+            echo '#########CONTAINER SCAN PLACEHOLDER############'
+            echo '#########CONTAINER SCAN PLACEHOLDER############'
+            echo '#########CONTAINER SCAN PLACEHOLDER############'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===
+pool:
+  vmImage: ubuntu-latest
+
 variables:
   VERSION_TAG: 'x.y.z'
 
